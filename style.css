@@ -24,3 +24,6 @@ body{
 #green{
     background-color: rgb(84, 131, 84);
 }
+.flash{
+    background-color: white !important;
+}
