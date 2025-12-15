@@ -1,6 +1,7 @@
 let gameseq=[];
 let userseq=[];
 let btns=["red","blue","green","yellow"];
+let highestscore=0;
 
 let started=false;
 let level=0;
@@ -23,7 +24,7 @@ function btnflash(sbtn){
 function levelup(){
     level++;
     userseq=[];
-    h2.innerText=`Level ${level}`;
+    h2.innerHTML=`Level ${level} <br> Highest Score: ${highestscore}`;
     
     let ranidx=Math.floor(Math.random()*4);
     let ranbtn=btns[ranidx];
@@ -34,15 +35,21 @@ function levelup(){
     btnflash(btn);
     } 
     function anscheck(idx){
-       
-       
         if(userseq[idx]===gameseq[idx]){
             if(userseq.length===gameseq.length){
               setTimeout ( levelup,1000);
             }
         }
         else{
-            h2.innerText="Game Over, Press Any Key to Restart!!";
+            if(level-1>highestscore){
+                highestscore=level-1;}
+            h2.innerHTML=`Game Over, Your score is <b> ${level-1} </b> <br>Highest score is :${highestscore} <br>Press Any Key to Restart!!`;
+            document.querySelector("body").style.backgroundColor="red";
+            setTimeout(function(){
+                document.querySelector("body").style.backgroundColor="white";
+            },200);
+            
+            reset();
         }
     }
 
@@ -57,4 +64,11 @@ function levelup(){
     let Allbtns=document.querySelectorAll(".btn");
     for(let btn of Allbtns){
          btn.addEventListener("click", btnpress);
+    }
+
+    function reset(){
+        started=false;
+        level=0;
+        gameseq=[];
+        userseq=[];
     }
